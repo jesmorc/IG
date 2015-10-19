@@ -102,6 +102,131 @@ glVertex3f(0,0,AXIS_SIZE);
 glEnd();
 }
 
+//Funcion circulo
+void Circle (GLfloat radio, GLfloat cx, GLfloat cy, GLint n, GLenum modo){
+int i;
+if (modo==GL_LINE) glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+else if (modo==GL_FILL) glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+else glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
+glBegin( GL_POLYGON );
+for (i=0;i<n;i++)
+glVertex2f( cx+radio*cos(2.0*M_PI*i/n), cy+radio*sin(2.0*M_PI*i/n));
+glEnd();
+}
+
+void munieco(){
+
+	//BORDE CARA
+	glColor3f(0.0,0.0,0.0);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	glLineWidth(1);
+	glBegin (GL_POLYGON);
+	glVertex3f (-2.0,4.0,-0.1);
+	glVertex3f (-2.0,0.0,-0.1);
+	glVertex3f (2.0,0.0,-0.1);
+	glVertex3f (2.0,4.0,-0.1);
+	glEnd ( );
+
+	//BORDE OREJA 1
+	glColor3f(0.0,0.0,0.0);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	glLineWidth(1);
+	glBegin (GL_POLYGON);
+	glVertex3f (-3.0,3.0,0.0);
+	glVertex3f (-3.0,1.0,0.0);
+	glVertex3f (-2.0,1.0,0.0);
+	glVertex3f (-2.0,3.0,0.0);
+	glEnd ( );
+
+	//BORDE OREJA 2
+	glColor3f(0.0,0.0,0.0);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	glLineWidth(1);
+	glBegin (GL_POLYGON);
+	glVertex3f (3.0,3.0,0.0);
+	glVertex3f (3.0,1.0,0.0);
+	glVertex3f (2.0,1.0,0.0);
+	glVertex3f (2.0,3.0,0.0);
+	glEnd ( );
+
+
+	//COPA
+	glColor3f(0.0,0.0,0.0); 
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	glBegin (GL_POLYGON);
+	glVertex3f (-2.0,8.0,0.0);
+	glVertex3f (-2.0,5.0,0.0);
+	glVertex3f (2.0,5.0,0.0);
+	glVertex3f (2.0,8.0,0.0);
+	glEnd ( );
+
+	//ALA
+	glBegin (GL_POLYGON);
+	glVertex3f (-3.0,5.0,0.0);
+	glVertex3f (-3.0,4.0,0.0);
+	glVertex3f (3.0,4.0,0.0);
+	glVertex3f (3.0,5.0,0.0);
+	glEnd ( );
+
+
+
+	//CARA
+	glColor3f(0.6,0.4,0.0);
+
+	glBegin (GL_POLYGON);
+	glVertex3f (-2.0,4.0,-0.1);
+	glVertex3f (-2.0,0.0,-0.1);
+	glVertex3f (2.0,0.0,-0.1);
+	glVertex3f (2.0,4.0,-0.1);
+	glEnd ( );
+
+
+
+	//OREJA 1
+
+	glBegin (GL_POLYGON);
+	glVertex3f (-3.0,3.0,0.0);
+	glVertex3f (-3.0,1.0,0.0);
+	glVertex3f (-2.0,1.0,0.0);
+	glVertex3f (-2.0,3.0,0.0);
+	glEnd ( );
+
+	//OREJA 2
+	glBegin (GL_POLYGON);
+	glVertex3f (3.0,3.0,0.0);
+	glVertex3f (3.0,1.0,0.0);
+	glVertex3f (2.0,1.0,0.0);
+	glVertex3f (2.0,3.0,0.0);
+	glEnd ( );
+
+	//OJOS
+	glColor3f(0.0,0.0,1.0);
+	Circle(0.5,-1.0,3.0,20,GL_FILL);
+	Circle(0.5,1.0,3.0,20,GL_FILL);
+
+
+	//BOCA
+	glColor3f(0.2,0.2,0.1);
+	Circle(0.2,-1.0,1.0,20,GL_FILL);
+	Circle(0.2,1.0,1.0,20,GL_FILL);
+
+	glBegin (GL_POLYGON);
+	glVertex3f (-0.9,1.2,0.0);
+	glVertex3f (-0.9,0.8,0.0);
+	glVertex3f (1.0,0.8,0.0);
+	glVertex3f (1.0,1.2,0.0);
+	glEnd ( );
+
+
+	//NARIZ
+	glColor3f(0.3,0.2,0.1);
+	glBegin (GL_TRIANGLES);
+	glVertex3f (0.9,1.7,0.0);
+	glVertex3f (0.0,3.0,0.0);
+	glVertex3f (-0.9,1.7,0.0);
+	glEnd ( );
+
+}
 
 //**************************************************************************
 // Funcion que dibuja los objetos
@@ -109,7 +234,6 @@ glEnd();
 
 void draw_objects()
 {
-	
 	switch (modo)
 	{
 		case 1: //Puntos
@@ -124,7 +248,27 @@ void draw_objects()
 		case 4: //Ajedrez
 			figura.draw(Figura3D::CHESS);
 		break;
+		case 7: //5 objetos
+			figura.draw(Figura3D::LINES);
+		break;
 	}
+
+	//PINTO EL OBJETO EXTRA
+
+
+	glTranslatef(-tam,0.0,0.0);
+	glRotatef(90,0,0,1);
+	glScalef(0.5,0.5,0.5);
+
+	munieco();
+
+	glTranslatef(0.0,-tam*4,0.0);
+	glRotatef(-180,0,0,1);
+
+	munieco();
+
+
+
 	
 }
 
@@ -283,7 +427,7 @@ glutInitWindowSize(UI_window_width,UI_window_height);
 
 // llamada para crear la ventana, indicando el titulo (no se visualiza hasta que se llama
 // al bucle de eventos)
-glutCreateWindow("Práctica 1");
+glutCreateWindow("Practica 1");
 
 // asignación de la funcion llamada "dibujar" al evento de dibujo
 glutDisplayFunc(draw_scene);
